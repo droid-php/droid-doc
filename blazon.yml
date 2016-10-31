@@ -1,0 +1,24 @@
+dest: output
+pages:
+    index:
+        src: "doc/index.md"
+    getting-started:
+        src: "doc/getting-started.md"
+    enable-remote-command-execution:
+        src: "doc/enable-remote-command-execution.md"
+    configuration-reference/index:
+        src: "doc/configuration-reference/index.md"
+    configuration-reference/project:
+        src: "doc/configuration-reference/project.md"
+    configuration-reference/target:
+        src: "doc/configuration-reference/target.md"
+    configuration-reference/task:
+        src: "doc/configuration-reference/task.md"
+    configuration-reference/host:
+        src: "doc/configuration-reference/host.md"
+    configuration-reference/group:
+        src: "doc/configuration-reference/group.md"
+    configuration-reference/firewall-rule:
+        src: "doc/configuration-reference/firewall-rule.md"
+    configuration-reference/module:
+        src: "doc/configuration-reference/module.md"
