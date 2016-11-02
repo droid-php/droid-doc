@@ -57,19 +57,7 @@ the Target as an argument to the Droid command:-
 
 Variables are used to provide commands with named values for use during command
 execution.  The `variables` directive is a mapping of arbitrary names to
-values.  A value may be a string of characters, a number, a list or a mapping.
-For example:-
-
-    variables:
-        shape: "line"
-        length: 2048
-        points:
-            - {x: 0}
-            - {x: 512}
-            - {x: 768}
-        point_conf:
-            colour: "blue"
-            size: 1
+values.
 
 Variables may be declared in various places; Targets, Hosts and Groups may
 declare their own variables which are combined with and override those declared
@@ -84,6 +72,7 @@ at the Project level and declare more-specific values in a Target:-
             variables:
                 colour: "blue"
                 thickness: 1
+            tasks: ...
 
 The values available to commands executed by the above example Target
 `do_a_thing` would be:-

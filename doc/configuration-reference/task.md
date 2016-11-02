@@ -46,13 +46,6 @@ The names of the commands appears in the left-hand column.  For example:-
 
 ## `arguments`
 
-Covers:-
-
-- mapping of command args and opts (name: value)
-- how to value-less opt
-- placeholder substitution
-- file content and template rendering `@` and `!`
-
 The `arguments` property of a Task are the required and optional arguments
 passed to a Command when it is executed.  It is a mapping of argument names to
 their values.  The names and types of arguments of a command may be obtained
@@ -92,8 +85,6 @@ and that options that do not take a value, such as with `--force` in this
 example, are given with the `~` (tilde) character which is Yaml's `NULL`
 character.
 
-### Placeholders
-
 Task arguments may use placeholders which are replaced by the value of a
 variable immediately before the arguments are passed to a command.  For
 example:-
@@ -102,36 +93,19 @@ example:-
         - name: "Add cron job to Ping a host"
           command: "cron:addjob"
           arguments:
-              name: "Ping {{{ service_to_ping }}} once a min."
-              job-command: "ping -c 1 {{{ service_to_ping }}}"
+              name: "Ping {{ service_to_ping }} once a min."
+              job-command: "ping -c 1 {{ service_to_ping }}"
               ...
 
-In the above example, `{{{ service_to_ping }}}` is the placeholder and will be
+In the above example, `{{ service_to_ping }}` is the placeholder and will be
 replaced by the value of a variable name `service_to_ping`.  The variable may
 be defined as a Project variable, a Target variable or, if the Task is to be
 executed on a remote Host, a Host or Group variable.  Using placeholders can
 ease the the maintenance of Tasks by reducing the need to change a particular
 value in all the places it may appear in a Project.
 
-Placeholders may refer to nested variables. For example, the `username` in this
-set of variables:-
-
-    variables:
-        mysql_opts:
-            db_name: "my_db"
-            username: "db_user"
-            password: "53kr37"
-
-may be referred to by the placeholder: `{{{ mysql_opts.username }}}`.  There is
-no limit to the depth of nesting.
-
-### Templates
-
-TODO!!
-
-### Module mod_path
-
-TODO!!
+Please see [Task Arguments and Variables][task-args] for more information about
+how Variables and Task Arguments are used.
 
 ## `hosts`
 
@@ -224,14 +198,14 @@ directories:-
                 - name: "Create directories"
                   command: "fs:mkdir"
                   arguments:
-                      directory: {{{ item }}}
+                      directory: {{ item }}
                   ...
                   with_items:
                       - "/var/www/mywebsite"
                       - "/var/db/mywebsite"
 
-Notice that the `directory` argument to the command uses the placeholder `{{{
-item }}}` which refers to the current item in the list of `with_items` on each
+Notice that the `directory` argument to the command uses the placeholder `{{
+item }}` which refers to the current item in the list of `with_items` on each
 execution.  The value of `with_items` may also be the name of a variable:-
 
     target:
@@ -256,8 +230,8 @@ The items in the list may also be mappings of multiple values:-
             tasks:
                 - name: "Create directories"
                   arguments:
-                      directory: {{{ item.path }}}
-                      mode: {{{ item.mode }}}
+                      directory: {{ item.path }}
+                      mode: {{ item.mode }}
                   ...
                   with_items: "webdirs"
 
@@ -316,3 +290,4 @@ are usually those which support the `--check` option.
 [conf-host]: </configuration-reference/host.html> "Host configuration"
 [symfony-expr-syntax]: <https://symfony.com/doc/current/components/expression_language/syntax.html> "The Expression Syntax"
 [remote-exec]: </enable-remote-command-execution.html> "Enable remote command execution"
+[task-args]: </task-arguments-and-variables.html> "Task Arguments and Variables"

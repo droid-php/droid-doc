@@ -64,8 +64,8 @@ directories:-
         - name: "Create directories"
           command: "fs:mkdir"
           arguments:
-              directory: {{{ item.path }}}
-              mode: {{{ item.mode }}}
+              directory: {{ item.path }}
+              mode: {{ item.mode }}
           with_items: mod_fantastic_dirs
 
 The module should provide sensible default values for the variables it uses:-

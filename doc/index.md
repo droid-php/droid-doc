@@ -47,6 +47,7 @@ members of the Group.
 
 Learn more:-
 
+- [Task Arguments and Variables][task-args]
 - [Enable remote command execution][remote-exec]
 - [Configuration reference][conf-index]
   - [Project][conf-project]
@@ -60,6 +61,7 @@ Learn more:-
 
 [index]: </index.html> "Introduction"
 [get-started]: </getting-started.html> "Getting started"
+[task-args]: </task-arguments-and-variables.html> "Task Arguments and Variables"
 [remote-exec]: </enable-remote-command-execution.html> "Enable remote command execution"
 [conf-index]: </configuration-reference/index.html> "Configuration Reference"
 [conf-fw]: </configuration-reference/firewall-rule.html> "Firewall Rule configuration"

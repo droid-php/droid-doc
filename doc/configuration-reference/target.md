@@ -100,12 +100,12 @@ name of a user account for use by a number of Tasks:-
                 - name: "Create owner user account"
                   command: "user:create"
                   arguments:
-                      username: "{{{ owner_username }}}"
+                      username: "{{ owner_username }}"
                 - name: "Own the docroot"
                   command: "fs:chown"
                   arguments:
-                     file: "{{{ docroot }}}"
-                     user: "{{{ owner_username }}}"
+                     file: "{{ docroot }}"
+                     user: "{{ owner_username }}"
                      group: "nobody"
 
 Variables declared here can augment and override values declared in the main

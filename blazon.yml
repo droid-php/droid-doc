@@ -4,6 +4,8 @@ pages:
         src: "doc/index.md"
     getting-started:
         src: "doc/getting-started.md"
+    task-arguments-and-variables:
+        src: "doc/task-arguments-and-variables.md"
     enable-remote-command-execution:
         src: "doc/enable-remote-command-execution.md"
     configuration-reference/index:

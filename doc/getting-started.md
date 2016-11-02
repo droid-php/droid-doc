@@ -164,21 +164,21 @@ We create a basic HTML index page:-
 and a template for the virtual host config file:-
 
     $ cat assets/vhost.conf.template
-    # {{{ item.name }}}
+    # {{ item.name }}
     <VirtualHost *:80>
-      ServerName "{{{ item.name }}}"
-      DocumentRoot "{{{ item.docroot }}}"
-      <Directory "{{{ item.docroot }}}">
+      ServerName "{{ item.name }}"
+      DocumentRoot "{{ item.docroot }}"
+      <Directory "{{ item.docroot }}">
         Options Indexes FollowSymLinks MultiViews
         AllowOverride All
         Require all granted
       </Directory>
-      ErrorLog "/var/log/apache2/{{{ item.name }}}_error.log"
-      CustomLog "/var/log/apache2/{{{ item.name }}}_access.log" combined
+      ErrorLog "/var/log/apache2/{{ item.name }}_error.log"
+      CustomLog "/var/log/apache2/{{ item.name }}_access.log" combined
     </VirtualHost>
 
-This vhost config template contains placeholders `{{{ item.name }}}` and `{{{
-item.docroot }}}` which will be replaced with concrete values.  We will add to
+This vhost config template contains placeholders `{{ item.name }}` and `{{
+item.docroot }}` which will be replaced with concrete values.  We will add to
 our `droid.yml` a Target variable in which to declare the concrete values:-
 
     targets:
@@ -207,19 +207,20 @@ our web server hosts:-
                   command: "fs:copy"
                   sudo: true
                   arguments:
-                      src: "!assets/vhost.conf.template"
-                      dest: "/etc/apache2/sites-available/{{{ item.name }}}.conf"
+                      src: "@assets/vhost.conf.template"
+                      dest: "/etc/apache2/sites-available/{{ item.name }}.conf"
                   with_items: websites
 
 Here we use the `fs:copy` command to copy the content of our template to
-`/etc/apache2/sites-available`.  The exclamation mark at the beginning of the
-`src` argument indicates that Droid should substitute the file path with
-contents of that file after replacing placeholders with concrete values.  The
-`with_items` directive instructs Droid to perform a Task for each item in the
-list of items declared at the named variable: our Target variable `websites` in
-this case.  Droid makes available a special variable named `item` containing
-the values of the current item and this is how Droid is able to replace the
-`{{{ item.name }}}` and `{{{ item.docroot }}}` placeholders.
+`/etc/apache2/sites-available`.  The `@` character at the beginning of the
+`src` argument indicates that Droid should substitute the file path with the
+contents of that file and, because the file is a template, it should replace
+placeholders in the content with concrete values.  The `with_items` directive
+instructs Droid to perform a Task for each item in the list of items declared
+at the named variable: our Target variable `websites` in this case.  Droid
+makes available a special variable named `item` containing the values of the
+current item and this is how Droid is able to replace the `{{ item.name }}` and
+`{{ item.docroot }}` placeholders.
 
 Next we will add tasks to create the document root directories and assign
 ownership and permissions:-
@@ -232,14 +233,14 @@ ownership and permissions:-
                   command: "fs:mkdir"
                   sudo: true
                   arguments:
-                      directory: "{{{ item.docroot }}}"
+                      directory: "{{ item.docroot }}"
                   with_items: websites
                 -
                   name: "Change ownership of the document root directory"
                   command: "fs:chown"
                   sudo: true
                   arguments:
-                      file: "{{{ item.docroot }}}"
+                      file: "{{ item.docroot }}"
                       user: "root"
                       group: "www-data"
                   with_items: websites
@@ -248,7 +249,7 @@ ownership and permissions:-
                   command: "fs:chmod"
                   sudo: true
                   arguments:
-                      filename: "{{{ item.docroot }}}"
+                      filename: "{{ item.docroot }}"
                       mode: "2750"
                   with_items: websites
 
@@ -263,7 +264,7 @@ We deploy our HTML index page:-
                   sudo: true
                   arguments:
                       src: "@assets/index.html"
-                      dest: "{{{ item.docroot} }}/index.html"
+                      dest: "{{ item.docroot} }}/index.html"
                   with_items: websites
 
 The `@` symbol at the beginning of the `src` argument instructs Droid to
@@ -281,7 +282,7 @@ configuration reload:-
                   command: "apache:ensite"
                   sudo: true
                   arguments:
-                      site-name: "{{{ item.name }}}"
+                      site-name: "{{ item.name }}"
                   with_items: websites
                   trigger: "Reload the Apache2 service"
             triggers:
@@ -314,10 +315,12 @@ We may now execute our Target exactly as we did before:-
 
 ## Further reading
 
-- [Configuration reference][conf-index]
+- [Task Arguments and Variables][task-args]
 - [Enable remote command execution][remote-exec]
+- [Configuration reference][conf-index]
 
 [Composer]: <https://getcomposer.org/>
 [Yaml]: <http://www.yaml.org/spec/1.2/spec.html> "YAML Ain’t Markup Language (YAML&#8192;) Version 1.2"
 [conf-index]: </configuration-reference/index.html> "Configuration reference"
 [remote-exec]: </enable-remote-command-execution.html> "Enable remote command execution"
+[task-args]: </task-arguments-and-variables.html> "Task Arguments and Variables"
