@@ -8,6 +8,8 @@ pages:
         src: "doc/task-arguments-and-variables.md"
     enable-remote-command-execution:
         src: "doc/enable-remote-command-execution.md"
+    modules:
+        src: "doc/modules.md"
     configuration-reference/index:
         src: "doc/configuration-reference/index.md"
     configuration-reference/project:

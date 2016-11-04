@@ -318,9 +318,11 @@ We may now execute our Target exactly as we did before:-
 - [Task Arguments and Variables][task-args]
 - [Enable remote command execution][remote-exec]
 - [Configuration reference][conf-index]
+- [Modules - reusable Task lists][modules]
 
 [Composer]: <https://getcomposer.org/>
 [Yaml]: <http://www.yaml.org/spec/1.2/spec.html> "YAML Ain’t Markup Language (YAML&#8192;) Version 1.2"
 [conf-index]: </configuration-reference/index.html> "Configuration reference"
 [remote-exec]: </enable-remote-command-execution.html> "Enable remote command execution"
 [task-args]: </task-arguments-and-variables.html> "Task Arguments and Variables"
+[modules]: </modules.html> "Modules"
