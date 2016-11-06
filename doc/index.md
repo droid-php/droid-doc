@@ -58,6 +58,7 @@ Learn more:-
   - [Firewall Rule][conf-fw]
   - [Module][conf-module]
 - [Modules - reusable Task lists][modules]
+- [Command Reference][command-index]
 - ...
 
 [index]: </index.html> "Introduction"
@@ -74,6 +75,7 @@ Learn more:-
 [conf-task]: </configuration-reference/task.html> "Task Configuration"
 [hacking]: </hacking.html> "Hacking"
 [modules]: </modules.html> "Modules"
+[command-index]: </command-reference/index.html> "Command Reference"
 [command-plugins]: </command-plugins.html> "command-plugins"
 [symfony-console]: <https://symfony.com/doc/current/components/console.html> "The Console Component"
 [symfony-command]: <https://symfony.com/doc/current/console.html> "Console Commands"

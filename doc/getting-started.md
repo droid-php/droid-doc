@@ -361,10 +361,12 @@ $ vendor/bin/droid make-webserver
 - [Task Arguments and Variables][task-args]
 - [Enable Remote Command Execution][remote-exec]
 - [Configuration Reference][conf-index]
+- [Command Reference][command-index]
 - [Modules - reusable Task lists][modules]
 
 [Composer]: <https://getcomposer.org/>
 [Yaml]: <http://www.yaml.org/spec/1.2/spec.html> "YAML Ain’t Markup Language (YAML&#8192;) Version 1.2"
+[command-index]: </command-reference/index.html> "Command Reference"
 [conf-index]: </configuration-reference/index.html> "Configuration Reference"
 [remote-exec]: </enable-remote-command-execution.html> "Enable Remote Command Execution"
 [task-args]: </task-arguments-and-variables.html> "Task Arguments and Variables"

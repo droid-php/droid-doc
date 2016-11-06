@@ -1,0 +1,34 @@
+{% extends "@Templates/default.html.twig" %}
+
+{% block content %}
+    <h1>Command <code>{{ command.name }}</code></h1>
+    <p class="lead">{{ command.description }}</p>
+    {% if command.help %}<p class="lead">{{ command.help }}</p>{% endif %}
+
+    <h3>Arguments</h3>
+    {% if command.definition.arguments|length %}
+    <ul>
+        {% for argument in command.definition.arguments %}
+        <li><code>{{ argument.name }}</code>: {{ argument.description }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>None.</p>
+    {% endif %}
+
+    <h3>Options</h3>
+    {% if command.definition.options|length %}
+    <ul>
+        {% for option in command.definition.options %}
+        <li><code>--{{ option.name }}</code>: {{ option.description }}</li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>None.</p>
+    {% endif %}
+
+    <center><a href="{{ index_page_url }}" class="btn btn-success">Back to command index</a></center>
+    <br /><br />
+{% endblock %}
+
+{% block title %}{{ command.name }} Command{% endblock %}

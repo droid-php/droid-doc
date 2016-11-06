@@ -1,0 +1,16 @@
+{% extends "@Templates/default.html.twig" %}
+
+{% block content %}
+    <h1>{% if page.title %}{{ page.title }}{% else %}Command index{% endif %}</h1>
+    <p class="lead">
+        Below you'll find a list of all the available commands in the standard distribution of Droid.
+    </p>
+    <p class="lead">
+        Click on the command-name for full description, available arguments and options, etc.
+    </p>
+    <ul>
+    {% for url, command in commands %}
+        <li><code><a href="{{ url }}">{{ command.name }}</a></code> {{ command.description }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}
