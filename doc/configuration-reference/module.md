@@ -17,11 +17,13 @@ Module, that is, what it will accomplish.
 This `tasks` property of a Module is a list of Tasks which will be executed in
 the order of their definition.
 
-    tasks:
-        - name: "Install Apache"
-          ...
-        - name: "Configure Apache"
-          ...
+```yaml
+tasks:
+    - name: "Install Apache"
+      ...
+    - name: "Configure Apache"
+      ...
+```
 
 Please see the [Task Configuration][conf-task] for the configuration of a Task.
 
@@ -33,15 +35,17 @@ execution of another Task when its Command is able to report whether or not it
 made a change.  For example, a Task which modifies the configuration of a
 system service may cause the service to reload its configuration:-
 
-    tasks:
-        - name: "Enable Apache module"
-          command: "apache:enmod"
-          arguments: {module-name: ...}
-          trigger: "Reload Apache"
-    triggers:
-        - name: "Reload Apache"
-          command: "service:reload"
-          arguments: {name: "apache2"}
+```yaml
+tasks:
+    - name: "Enable Apache module"
+      command: "apache:enmod"
+      arguments: {module-name: ...}
+      trigger: "Reload Apache"
+triggers:
+    - name: "Reload Apache"
+      command: "service:reload"
+      arguments: {name: "apache2"}
+```
 
 A Task is triggered only when such a Command reports that a change was made.
 
@@ -60,33 +64,39 @@ directories as part of a larger objective.  The Task will use the `with_items`
 property and use the name of a variable which will hold the list of
 directories:-
 
-    tasks:
-        - name: "Create directories"
-          command: "fs:mkdir"
-          arguments:
-              directory: {{ item.path }}
-              mode: {{ item.mode }}
-          with_items: mod_fantastic_dirs
+```yaml
+tasks:
+    - name: "Create directories"
+      command: "fs:mkdir"
+      arguments:
+          directory: {{ item.path }}
+          mode: {{ item.mode }}
+      with_items: mod_fantastic_dirs
+```
 
 The module should provide sensible default values for the variables it uses:-
 
-    variables:
-        mod_fantastic_dirs:
-            - {path: "/var/www/fantastic", mode: "0700"}
-    tasks:
-        - name: "Create directories"
-          ...
-          with_items: mod_fantastic_dirs
+```yaml
+variables:
+    mod_fantastic_dirs:
+        - {path: "/var/www/fantastic", mode: "0700"}
+tasks:
+    - name: "Create directories"
+      ...
+      with_items: mod_fantastic_dirs
+```
 
 Projects which use the Module may be happy to use the default values, or they
 may set their own:-
 
-    targets:
-        do_something_fantastic:
-            variables:
-                mod_fantastic_dirs:
-                    - {path: "/usr/share/fantastic", mode: "0550"}
-            modules:
-                - "fantastic"
+```yaml
+targets:
+    do_something_fantastic:
+        variables:
+            mod_fantastic_dirs:
+                - {path: "/usr/share/fantastic", mode: "0550"}
+        modules:
+            - "fantastic"
+```
 
 [conf-task]: </configuration-reference/task.html> "Task configuration"

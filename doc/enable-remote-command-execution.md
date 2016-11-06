@@ -36,22 +36,28 @@ and write `/usr/local/droid`.  A good way to achieve this is to create a
 dedicated user account on the remote Host, making `/usr/local/droid` its Home
 Directory:-
 
-    $ sudo adduser --disabled-password --gecos "Droid" --home "/usr/local/droid" "droid"
+```shell
+$ sudo adduser --disabled-password --gecos "Droid" --home "/usr/local/droid" "droid"
+```
 
 The user account may need to be able to execute commands with `sudo` and it
 must be able to do so without being required to provide a password.  One way to
 achieve this is to issue the following command on the remote Host:-
 
-     $ echo "droid ALL=(root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/droid
+```shell
+$ echo "droid ALL=(root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/droid
+```
 
 This will allow the `droid` user account to issue `sudo` with all commands
 without being required to provide a password.  It is recommended, however, that
 the user account be limited in the commands it can execute in this way.  An
 example of a more controlled `/etc/sudoers.d/droid` file might be:-
 
-    # Sudoers for Droid
-    Cmnd_Alias DROID_COMMANDS = /usr/bin/apt-get install,/bin/chown,/bin/chmod
-    droid ALL=(root) NOPASSWD:DROID_COMMANDS
+```text
+# Sudoers for Droid
+Cmnd_Alias DROID_COMMANDS = /usr/bin/apt-get install,/bin/chown,/bin/chmod
+droid ALL=(root) NOPASSWD:DROID_COMMANDS
+```
 
 See the sudoers manual page (`man 5 sudoers`) for more information about the
 format of a sudoers file.
@@ -92,20 +98,26 @@ and have verified the fingerprint.
 
 We generate an SSH key pair for use by Droid:-
 
-    $ ssh-keygen -b 2048 -t rsa -C "Identifies Droid" -f ~/.ssh/droid_id_rsa
+```shell
+$ ssh-keygen -b 2048 -t rsa -C "Identifies Droid" -f ~/.ssh/droid_id_rsa
+```
 
 We are asked for a pass phrase with which to secure the private key.  We are
 prompted for this pass phrase each time we use it to authenticate to a remote
 Host.  So we register it with our SSH Agent which will "remember" the pass
 phrase so that we aren't repeatedly prompted for it:-
 
-    $ ssh-add ~/.ssh/droid_id_rsa
+```shell
+$ ssh-add ~/.ssh/droid_id_rsa
+```
 
 We now copy the public key to a temporary place on the remote Host.  Let's
 pretend our remote Host is at 198.51.100.1 and that we have a sufficiently
 privileged account there:-
 
-    $ scp ~/.ssh/droid_id_rsa.pub myuser@198.51.100.1:/tmp/
+```shell
+$ scp ~/.ssh/droid_id_rsa.pub myuser@198.51.100.1:/tmp/
+```
 
 We are now prepared to perform the required steps on the remote Host.
 
@@ -113,34 +125,44 @@ We are now prepared to perform the required steps on the remote Host.
 
 We create a dedicated user account for Droid:-
 
-    $ sudo adduser --disabled-password --gecos "Droid" \
-           --home "/usr/local/droid" "droid"
+```shell
+$ sudo adduser --disabled-password --gecos "Droid" \
+       --home "/usr/local/droid" "droid"
+```
 
 We enable public key authentication for our Droid user, using the public key
 uploaded in a previous step:-
 
-    $ sudo mkdir /usr/local/droid/.ssh
-    $ sudo chown droid:droid /usr/local/droid/.ssh
-    $ sudo chmod 0750 /usr/local/droid/.ssh
-    $ sudo mv /tmp/droid_id_rsa.pub /usr/local/droid/.ssh/authorized_keys
-    $ sudo chown droid:droid /usr/local/droid/.ssh/authorized_keys
-    $ sudo chmod 0640 /usr/local/droid/.ssh/authorized_keys
+```shell
+$ sudo mkdir /usr/local/droid/.ssh
+$ sudo chown droid:droid /usr/local/droid/.ssh
+$ sudo chmod 0750 /usr/local/droid/.ssh
+$ sudo mv /tmp/droid_id_rsa.pub /usr/local/droid/.ssh/authorized_keys
+$ sudo chown droid:droid /usr/local/droid/.ssh/authorized_keys
+$ sudo chmod 0640 /usr/local/droid/.ssh/authorized_keys
+```
 
 We enable password-less Sudoing for our Droid user, writing the following
 content to a sudoers file:
 
-    # Sudoers for Droid
-    Cmnd_Alias DROID_COMMANDS = /usr/bin/apt-get install,/bin/chown,/bin/chmod
-    droid ALL=(root) NOPASSWD:DROID_COMMANDS
+```text
+# Sudoers for Droid
+Cmnd_Alias DROID_COMMANDS = /usr/bin/apt-get install,/bin/chown,/bin/chmod
+droid ALL=(root) NOPASSWD:DROID_COMMANDS
+```
 
 So we create and edit the sudoers file:-
 
-    $ sudo touch /etc/sudoers.d/droid
-    $ sudo vi /etc/sudoers.d/droid
+```shell
+$ sudo touch /etc/sudoers.d/droid
+$ sudo vi /etc/sudoers.d/droid
+```
 
 Finally, we install the PHP CLI from the system packages:-
 
-    $ sudo apt-get install php5-cli
+```shell
+$ sudo apt-get install php5-cli
+```
 
 We're now able to add this Host to our inventory of Droid-managed Hosts.  Let's
 test it!
@@ -150,46 +172,56 @@ test it!
 We will create a new Droid Project and have Droid run a simple command on our
 remote Host.
 
-    $ mkdir myproject && cd myproject
-    $ composer init -n
-    $ composer require droid/droid-standard
+```shell
+$ mkdir myproject && cd myproject
+$ composer init -n
+$ composer require droid/droid-standard
+```
 
 We will create the following Project configuration:-
 
-    project:
-        name: "This is just a test project"
-    targets:
-        testing:
-            tasks:
-                - name: "Talk to me"
-                  command: "debug:echo"
-                  arguments:
-                      message: "I am speaking to you from afar"
-                  hosts: "testhost"
-    hosts:
-        testhost:
-            droid_ip: "198.51.100.1"
-            username: droid
-            keyfile: "~/.ssh/droid_id_rsa"
+```yaml
+project:
+    name: "This is just a test project"
+targets:
+    testing:
+        tasks:
+            - name: "Talk to me"
+              command: "debug:echo"
+              arguments:
+                  message: "I am speaking to you from afar"
+              hosts: "testhost"
+hosts:
+    testhost:
+        droid_ip: "198.51.100.1"
+        username: droid
+        keyfile: "~/.ssh/droid_id_rsa"
+```
 
 We may now execute the Target named `testing` to run our test:-
 
-    $ vendor/bin/droid testing
+```shell
+$ vendor/bin/droid testing
+```
 
 If all went well, we should see:-
 
-    Droid: Running target `testing`
-    Task `Talk to me`: debug:echo on testhost
-    Host testhost: message=I am speaking to you from afar
-    testhost Begin droid enablement.
+```shell
+Droid: Running target `testing`
+Task `Talk to me`: debug:echo on testhost
+Host testhost: message=I am speaking to you from afar
+testhost Begin droid enablement.
+```
 
 At this point, Droid is installing Composer and itself on `testhost`. After a
 pause, we should see the remaining output:-
 
-    testhost Finished droid enablement. Success.
-    testhost I am speaking to you from afar
-    Result: 0
-    --------------------------------------------
-    $
+```shell
+testhost Finished droid enablement. Success.
+testhost I am speaking to you from afar
+Result: 0
+--------------------------------------------
+$
+```
 
 This was a successful test.

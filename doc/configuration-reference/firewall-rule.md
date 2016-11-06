@@ -5,27 +5,35 @@ configuration of a Host to set-up Uncomplicated Firewall (UFW) on the Host.
 Each rule is transformed into the arguments needed to execute the `ufw` program
 on the Host.  For example, the following rule:-
 
-    - address: "198.51.100.60"
-      port: 3306
-      direction: "outbound"
-      action: "allow"
-      comment: "Allow MySQL connections to the db server (198.51.100.60)"
+```yaml
+- address: "198.51.100.60"
+  port: 3306
+  direction: "outbound"
+  action: "allow"
+  comment: "Allow MySQL connections to the db server (198.51.100.60)"
+```
 
 is transformed into the following command:-
 
-    ufw allow out proto tcp from any to 198.51.100.60 port 3306
+```shell
+ufw allow out proto tcp from any to 198.51.100.60 port 3306
+```
 
 An example of a rule for incoming traffic:-
 
-    - address: "198.51.100.1"
-      port: 22
-      direction: "inbound"
-      action: "allow"
-      comment: "Allow SSH connections from Droid (198.51.100.1)"
+```yaml
+- address: "198.51.100.1"
+  port: 22
+  direction: "inbound"
+  action: "allow"
+  comment: "Allow SSH connections from Droid (198.51.100.1)"
+```
 
 which is transformed into the following command:-
 
-    ufw allow in proto tcp from 198.51.100.1 to any port 22
+```shell
+ufw allow in proto tcp from 198.51.100.1 to any port 22
+```
 
 It is important to note the `fw:install` command will activate the UFW rules
 immediately.  The standard firewall policy employed by the `fw:install` command
@@ -44,47 +52,53 @@ of the Host to which the Rule applies.  A value is always required.
 A value of "all" is interpreted as "any remote host".  For example to allow all
 incoming traffic to a web service:-
 
-    - address: "all"
-      port:443
-      direction: "inbound"
-      action: "allow"
-      comment: "Allow incoming HTTPS traffic from anywhere"
-    - address: "all"
-      port: 80
-      direction: "inbound"
-      action: "allow"
-      comment: "Allow incoming HTTP traffic from anywhere"
+```yaml
+- address: "all"
+  port:443
+  direction: "inbound"
+  action: "allow"
+  comment: "Allow incoming HTTPS traffic from anywhere"
+- address: "all"
+  port: 80
+  direction: "inbound"
+  action: "allow"
+  comment: "Allow incoming HTTP traffic from anywhere"
+```
 
 The value of the `address` property may also be a specific IP address or it may
 be the label of another Host as defined in the `hosts` directive of a Droid
 Project (see [Project Configuration][conf-project]):-
 
-    hosts:
-        web-01:
-            public_ip: "198.51.100.1"
-            ...
-        database-01:
-            ...
-            firewall_rules:
-                - address: "web-01"
-                  port: 3306
-                  ...
-                  comment: "Allow incoming MySQL traffic from the web server."
+```yaml
+hosts:
+    web-01:
+        public_ip: "198.51.100.1"
+        ...
+    database-01:
+        ...
+        firewall_rules:
+            - address: "web-01"
+              port: 3306
+              ...
+              comment: "Allow incoming MySQL traffic from the web server."
+```
 
 In the above example, the Rule for the Host labelled `database-01` uses the
 address `web-01` which is interpreted as the public IP address of that Host.  A
 rule can specify the private IP of a Host by appending `:private` to the
 address label:-
 
-    hosts:
-        web-01:
-            private_ip: "192.0.2.1"
-            ...
-        database-01:
-            ...
-            firewall_rules:
-                - address: "web-01:private"
-                  ...
+```yaml
+hosts:
+    web-01:
+        private_ip: "192.0.2.1"
+        ...
+    database-01:
+        ...
+        firewall_rules:
+            - address: "web-01:private"
+              ...
+```
 
 ## `port`
 

@@ -7,11 +7,13 @@ ways: explicitly or with a reference to a local SSH client configuration.
 
 Explicitly providing the connection information might look like this:-
 
-    hosts:
-        myhost:
-            droid_ip: "198.51.100.1"
-            username: "some_user"
-            keyfile: "/path/to/a/private/ssh/key"
+```yaml
+hosts:
+    myhost:
+        droid_ip: "198.51.100.1"
+        username: "some_user"
+        keyfile: "/path/to/a/private/ssh/key"
+```
 
 Here we have given the host a label `myhost` by which we may refer to this Host
 throughout the project; we have given an IP address to which Droid will
@@ -24,13 +26,15 @@ example in `~/.ssh/config`) so instead of repeating it here, we may refer to a
 Host in the SSH client configuration by providing a matching IP address, host
 name or alias:-
 
-    hosts:
-        myhost:
-            droid_ip: "198.51.100.1"
-        my_other_host:
-            droid_ip: "box.example.com"
-        another_host:
-           droid_ip: "an-alias"
+```yaml
+hosts:
+    myhost:
+        droid_ip: "198.51.100.1"
+    my_other_host:
+        droid_ip: "box.example.com"
+    another_host:
+       droid_ip: "an-alias"
+```
 
 In addition to the connection information, a Host can be configured with its
 own set of variables, options to pass to the SSH client and a set of firewall
@@ -112,10 +116,12 @@ SSH client when making an SSH connection to the Host.  The value is a mapping
 of option names to their values.  For example we may wish to increase the
 output from the SSH client:-
 
-    hosts:
-        myhost:
-            ssh_options:
-                LogLevel: "VERBOSE"
+```yaml
+hosts:
+    myhost:
+        ssh_options:
+            LogLevel: "VERBOSE"
+```
 
 When making a connection to a Host, Droid automatically sets some options:-
 
@@ -130,29 +136,33 @@ The `ssh_gateway` property of a Host is used when the connection to the Host
 should be made via an SSH Gateway.  Its value is the label given to the gateway
 Host.  For example:
 
-    hosts:
-        my_gateway:
-            droid_ip: "198.51.100.255"
-            username: "my_gw_user"
-            keyfile: "id_rsa"
-        my_host:
-            droid_ip: "198.51.100.1"
-            username: "my_user"
-            keyfile: "id_rsa"
-            ssh_gateway: "my_gateway"
+```yaml
+hosts:
+    my_gateway:
+        droid_ip: "198.51.100.255"
+        username: "my_gw_user"
+        keyfile: "id_rsa"
+    my_host:
+        droid_ip: "198.51.100.1"
+        username: "my_user"
+        keyfile: "id_rsa"
+        ssh_gateway: "my_gateway"
+```
 
 The `ssh_gateway` property is a helpful shortcut for the `ProxyCommand` SSH
 option.  The example above could be achieved directly with:-
 
-    hosts:
-        my_gateway:
-            droid_ip: "198.51.100.255"
-            username: "my_gw_user"
-            keyfile: "id_rsa"
-        my_host:
-            ...
-            ssh_options:
-                ProxyCommand: "ssh -o IdentityFile=id_rsa -o IdentitiesOnly=yes my_gw_user@198.51.100.255 nc %h %p"
+```yaml
+hosts:
+    my_gateway:
+        droid_ip: "198.51.100.255"
+        username: "my_gw_user"
+        keyfile: "id_rsa"
+    my_host:
+        ...
+        ssh_options:
+            ProxyCommand: "ssh -o IdentityFile=id_rsa -o IdentitiesOnly=yes my_gw_user@198.51.100.255 nc %h %p"
+```
 
 ## `firewall_policy`
 
@@ -162,18 +172,22 @@ It is a mapping of UFW network traffic directions (incoming, outgoing, routed)
 to actions (allow, deny, reject) and sets the default traffic policy for the
 Host.  For example, the following policy:-
 
-    hosts:
-        my_host:
-            firewall_policy:
-                incoming: "deny"
-                outgoing: "allow"
-                routed: "reject"
+```yaml
+hosts:
+    my_host:
+        firewall_policy:
+            incoming: "deny"
+            outgoing: "allow"
+            routed: "reject"
+```
 
 is transformed into the following UFW commands:-
 
-    ufw default deny incoming
-    ufw default allow outgoing
-    ufw default reject routed
+```shell
+ufw default deny incoming
+ufw default allow outgoing
+ufw default reject routed
+```
 
 ## `firewall_rules`
 
@@ -181,13 +195,15 @@ The `firewall_rules` property of a Host is used by the `fw:generate` and
 `fw:install` Commands in setting-up Uncomplicated Firewall (UFW) on the Host.
 It is a list of rules.
 
-    hosts
-        my_host:
-            firewall_rules:
-                - address: "all"
-                  port: 3306
-                  direction: "inbound"
-                  action: "deny"
+```yaml
+hosts
+    my_host:
+        firewall_rules:
+            - address: "all"
+              port: 3306
+              direction: "inbound"
+              action: "deny"
+```
 
 Please see the [Firewall Rule Configuration][conf-fw] for the configuration of
 firewall rules.

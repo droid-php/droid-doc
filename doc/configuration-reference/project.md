@@ -6,25 +6,27 @@ might use in the configuration of a Droid project.
 
 An example:-
 
-    name: "Example Project"
-    description: "This is an example of a Droid project"
-    variables:
-        something: "useful"
-    environment:
-        droid_use_private_net: false
-    modules:
-        - "docker": "git@github.com:droid-php/droid-module-docker.git"
-    targets:
-        do_my_bidding:
-            ...
-    hosts:
-        host1.example.com:
-            ...
-    groups:
-       group_a:
-            ...
-    include:
-        - "more-configuration.yml"
+```yaml
+name: "Example Project"
+description: "This is an example of a Droid project"
+variables:
+    something: "useful"
+environment:
+    droid_use_private_net: false
+modules:
+    - "docker": "git@github.com:droid-php/droid-module-docker.git"
+targets:
+    do_my_bidding:
+        ...
+hosts:
+    host1.example.com:
+        ...
+groups:
+   group_a:
+        ...
+include:
+    - "more-configuration.yml"
+```
 
 ## `name`
 
@@ -42,16 +44,20 @@ of Target name to [Target Configuration][conf-target]. For example, we may
 declare a Target named `build_everything` which executes a number of commands
 on each Host in a group named `all_machines`:-
 
-    targets:
-        build_everything:
-            hosts: "all_machines"
-            tasks:
-                - ...
+```yaml
+targets:
+    build_everything:
+        hosts: "all_machines"
+        tasks:
+            - ...
+```
 
 A Target declared here is executed from the command line by giving the name of
 the Target as an argument to the Droid command:-
 
-    $ vendor/bin/droid build_everything
+```shell
+$ vendor/bin/droid build_everything
+```
 
 ## `variables`
 
@@ -64,22 +70,26 @@ declare their own variables which are combined with and override those declared
 here at the Project level.  For example, we may declare sensible default values
 at the Project level and declare more-specific values in a Target:-
 
-    variables:
-        shape: "line"
-        colour: "red"
-    targets:
-        do_a_thing:
-            variables:
-                colour: "blue"
-                thickness: 1
-            tasks: ...
+```yaml
+variables:
+    shape: "line"
+    colour: "red"
+targets:
+    do_a_thing:
+        variables:
+            colour: "blue"
+            thickness: 1
+        tasks: ...
+```
 
 The values available to commands executed by the above example Target
 `do_a_thing` would be:-
 
-    shape: "line"
-    colour: "blue"
-    thickness: 1
+```yaml
+shape: "line"
+colour: "blue"
+thickness: 1
+```
 
 ## `modules`
 
@@ -88,20 +98,24 @@ to be used in a Project and provides names to which to refer to those Modules.
 The directive is a mapping of name to URL.  For example, we may declare that a
 project will use a Module for setting-up an Apache virtual host:-
 
-    modules:
-        "apache-vhost": "git@github.com:droid-php/droid-module-apache-vhost.git"
+```yaml
+modules:
+    "apache-vhost": "git@github.com:droid-php/droid-module-apache-vhost.git"
+```
 
 Droid installs Modules by fetching them from the given URLs.  It stores the
 Module content in a directory of the same name, under a directory named
 `droid-vendor`:-
 
-    $ vendor/bin/droid module:install
-    Installing droid modules:
-    - apache-vhost from git git@github.com:droid-php/droid-module-apache-vhost.git
-    Cloning from git@github.com:droid-php/droid-module-apache-vhost.git into droid-vendor/apache-vhost
-    Cloning into 'droid-vendor/apache-vhost'...
-    ...
-    Done
+```shell
+$ vendor/bin/droid module:install
+Installing droid modules:
+- apache-vhost from git git@github.com:droid-php/droid-module-apache-vhost.git
+Cloning from git@github.com:droid-php/droid-module-apache-vhost.git into droid-vendor/apache-vhost
+Cloning into 'droid-vendor/apache-vhost'...
+...
+Done
+```
 
 Currently, only `git@` URLs are supported.  We would later refer the Module by
 the name given here, which can be any name so long as it is used consistently
@@ -114,17 +128,21 @@ The `hosts` directive is used to declare one or more Hosts.  It is a mapping of
 Host name to [Host Configuration][conf-host].  For example, we may declare
 Hosts named `www.example.com` and provide Droid with its IP address:-
 
-    hosts:
-        "www.example.com":
-            droid_ip: "198.51.100.1"
+```yaml
+hosts:
+    "www.example.com":
+        droid_ip: "198.51.100.1"
+```
 
 We may then refer to this Host when we wish to execute commands on it:
 
-    targets:
-        make_website:
-            hosts: "www.example.com"
-            tasks:
-                - ...
+```yaml
+targets:
+    make_website:
+        hosts: "www.example.com"
+        tasks:
+            - ...
+```
 
 ## `groups`
 
@@ -132,19 +150,23 @@ The `groups` directive is used to declare one or more Groups of Hosts.  It is a
 mapping of Group name to [Group Configuration][conf-group].  For example, we
 may declare a group of web servers named `webservers`:-
 
-    groups:
-        webservers:
-            hosts:
-                - www1.example.com
-                - www2.example.com
+```yaml
+groups:
+    webservers:
+        hosts:
+            - www1.example.com
+            - www2.example.com
+```
 
 We may then refer to this Group when we wish to execute commands on its Hosts:
 
-    targets:
-        make_website:
-            hosts: "webservers"
-            tasks:
-                - ...
+```yaml
+targets:
+    make_website:
+        hosts: "webservers"
+        tasks:
+            - ...
+```
 
 ## `environment`
 
@@ -183,47 +205,49 @@ For example, we may wish to declare:-
 
 and place the configuration in five separate files:-
 
-    --------------------------
-    # droid.yml
-    --------------------------
-    include:
-        - inventory.yml
-        - targets/*.yml
-        - variables.yml
+```yaml
+--------------------------
+# droid.yml
+--------------------------
+include:
+    - inventory.yml
+    - targets/*.yml
+    - variables.yml
 
-    --------------------------
-    # inventory.yml
-    --------------------------
-    hosts:
-         www.example.com:
-             ...
-         db.example.com
-             ...
-    groups:
-         web_servers:
-             ...
-         db_servers:
-             ...
+--------------------------
+# inventory.yml
+--------------------------
+hosts:
+     www.example.com:
+         ...
+     db.example.com
+         ...
+groups:
+     web_servers:
+         ...
+     db_servers:
+         ...
 
-    --------------------------
-    # targets/make-website.yml
-    --------------------------
-    targets:
-        make-website:
-            hosts: web_servers
+--------------------------
+# targets/make-website.yml
+--------------------------
+targets:
+    make-website:
+        hosts: web_servers
 
-    --------------------------
-    # targets/make-db.yml
-    --------------------------
-    targets:
-        make-db:
-            hosts: db_servers
+--------------------------
+# targets/make-db.yml
+--------------------------
+targets:
+    make-db:
+        hosts: db_servers
 
-    --------------------------
-    # variables:
-    --------------------------
-    variables:
-        dbname: "mydb"
+--------------------------
+# variables:
+--------------------------
+variables:
+    dbname: "mydb"
+```
 
 [conf-group]: </configuration-reference/group.html> "Group configuration"
 [conf-host]: </configuration-reference/host.html> "Host configuration"

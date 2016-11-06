@@ -16,13 +16,15 @@ may be declared as part of the Target or as part of individual Tasks.
 This `tasks` property of a Target is a list of Tasks which will be executed in
 the order of their definition.
 
-    target:
-        make_website:
-            tasks:
-                - name: "Install Apache"
-                  ...
-                - name: "Configure Apache"
-                  ...
+```yaml
+target:
+    make_website:
+        tasks:
+            - name: "Install Apache"
+              ...
+            - name: "Configure Apache"
+              ...
+```
 
 Please see the [Task Configuration][conf-task] for the configuration of a Task.
 
@@ -33,12 +35,14 @@ and Groups of Hosts on which the Target is to be executed.  The expression may
 be a single name or a space or comma separated list of names.  The names must
 match those declared in the Project, under the `hosts` and `groups` directives.
 
-    target:
-        setup_firewalls:
-            hosts: "webservers db.example.com"
-            tasks:
-                - ...
-                - ...
+```yaml
+target:
+    setup_firewalls:
+        hosts: "webservers db.example.com"
+        tasks:
+            - ...
+            - ...
+```
 
 A Task may declare that it is to execute on some a subset of the Hosts
 identified here, or even on a completely different set of Hosts (see
@@ -50,11 +54,13 @@ The `modules` property of a Target is a list of Module names.  The Tasks of
 each of the specified Modules will be executed before those in `tasks` list.
 Modules are executed in the order in which they are declared here.
 
-    target:
-        make_webservers:
-            modules:
-                - "install-apache"
-                - "apache-vhost"
+```yaml
+target:
+    make_webservers:
+        modules:
+            - "install-apache"
+            - "apache-vhost"
+```
 
 The names of Modules must match those declared in the main `modules` directive
 (see [Project Configuration][conf-project]).
@@ -67,17 +73,19 @@ execution of another Task when its Command is able to report whether or not it
 made a change.  For example, a Task which modifies the configuration of a
 system service may cause the service to reload its configuration:-
 
-    target:
-        make_website:
-            triggers:
-                - name: "Reload Apache"
-                  command: "service:reload"
-                  arguments: {name: "apache2"}
-            tasks:
-                - name: "Enable Apache module"
-                  command: "apache:enmod"
-                  arguments: {module-name: ...}
-                  trigger: "Reload Apache"
+```yaml
+target:
+    make_website:
+        triggers:
+            - name: "Reload Apache"
+              command: "service:reload"
+              arguments: {name: "apache2"}
+        tasks:
+            - name: "Enable Apache module"
+              command: "apache:enmod"
+              arguments: {module-name: ...}
+              trigger: "Reload Apache"
+```
 
 A Task is triggered only when such a Command reports that a change was made.
 
@@ -91,22 +99,24 @@ The `variables` property of a Target is intended to provide concrete values for
 the Command arguments of the Target's Tasks.  For example, we might define the
 name of a user account for use by a number of Tasks:-
 
-    targets:
-        make_website:
-            variables:
-                owner_username: "devops-one"
-                docroot: ...
-            tasks:
-                - name: "Create owner user account"
-                  command: "user:create"
-                  arguments:
-                      username: "{{ owner_username }}"
-                - name: "Own the docroot"
-                  command: "fs:chown"
-                  arguments:
-                     file: "{{ docroot }}"
-                     user: "{{ owner_username }}"
-                     group: "nobody"
+```yaml
+targets:
+    make_website:
+        variables:
+            owner_username: "devops-one"
+            docroot: ...
+        tasks:
+            - name: "Create owner user account"
+              command: "user:create"
+              arguments:
+                  username: "{{ owner_username }}"
+            - name: "Own the docroot"
+              command: "fs:chown"
+              arguments:
+                 file: "{{ docroot }}"
+                 user: "{{ owner_username }}"
+                 group: "nobody"
+```
 
 Variables declared here can augment and override values declared in the main
 `variables` directive (see [Project Configuration][conf-project]) and those
