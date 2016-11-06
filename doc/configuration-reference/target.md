@@ -24,7 +24,7 @@ the order of their definition.
                 - name: "Configure Apache"
                   ...
 
-Please see the [Task configuration][conf-task] for the configuration of a Task.
+Please see the [Task Configuration][conf-task] for the configuration of a Task.
 
 ## `hosts`
 
@@ -42,7 +42,7 @@ match those declared in the Project, under the `hosts` and `groups` directives.
 
 A Task may declare that it is to execute on some a subset of the Hosts
 identified here, or even on a completely different set of Hosts (see
-`host_filter` and `hosts` of the [Task configuration][conf-task]).
+`host_filter` and `hosts` of the [Task Configuration][conf-task]).
 
 ## `modules`
 
@@ -57,7 +57,7 @@ Modules are executed in the order in which they are declared here.
                 - "apache-vhost"
 
 The names of Modules must match those declared in the main `modules` directive
-(see [Project configuration][conf-project]).
+(see [Project Configuration][conf-project]).
 
 ## `triggers`
 
@@ -82,7 +82,7 @@ system service may cause the service to reload its configuration:-
 A Task is triggered only when such a Command reports that a change was made.
 
 Apart from its conditional execution, a `triggers` Task is no different from a
-`tasks` Task.  Please see the [Task configuration][conf-task] for the
+`tasks` Task.  Please see the [Task Configuration][conf-task] for the
 configuration of a Task.
 
 ## `variables`
@@ -109,8 +109,8 @@ name of a user account for use by a number of Tasks:-
                      group: "nobody"
 
 Variables declared here can augment and override values declared in the main
-`variables` directive (see [Project configuration][conf-project]) and those
-declared in Modules (see [Module configuration][conf-module]).
+`variables` directive (see [Project Configuration][conf-project]) and those
+declared in Modules (see [Module Configuration][conf-module]).
 
 [conf-module]: </configuration-reference/module.html> "Module configuration"
 [conf-project]: </configuration-reference/project.html> "Project configuration"

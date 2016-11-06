@@ -72,7 +72,7 @@ The `public_ip` property of a Host is intended to be the publicly accessible IP
 address of the Host.  Droid will connect to the public IP address in order to
 execute commands on the Host when a value is not given for `droid_ip` or when
 Droid is instructed to connect to `private_ip` (see the `environment` directive
-in the [Project configuration][conf-project]).
+in the [Project Configuration][conf-project]).
 
 The `public_ip` property is also used in the generation of firewall rules: the
 rules definitions may refer to a the `public_ip` of another Host by keyword
@@ -86,7 +86,7 @@ of the Host.  Droid will connect to the private IP address in order to execute
 commands on the Host when a value is given neither for `droid_ip` nor
 `public_ip`.  Droid will connect to the private IP address also when Droid is
 instructed to do so (see the `environment` directive in the [Project
-configuration][conf-project]).
+Configuration][conf-project]).
 
 A private IP address may be particularly useful when dealing with Hosts which
 may communicate with each other over a private network, such as with many
@@ -189,7 +189,7 @@ It is a list of rules.
                   direction: "inbound"
                   action: "deny"
 
-Please see the [Firewall rule configuration][conf-fw] for the configuration of
+Please see the [Firewall Rule Configuration][conf-fw] for the configuration of
 firewall rules.
 
 [conf-fw]: </configuration-reference/firewall-rule.html> "Firewall rule configuration"

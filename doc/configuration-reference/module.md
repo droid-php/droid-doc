@@ -23,7 +23,7 @@ the order of their definition.
         - name: "Configure Apache"
           ...
 
-Please see the [Task configuration][conf-task] for the configuration of a Task.
+Please see the [Task Configuration][conf-task] for the configuration of a Task.
 
 ## `triggers`
 
@@ -46,7 +46,7 @@ system service may cause the service to reload its configuration:-
 A Task is triggered only when such a Command reports that a change was made.
 
 Apart from its conditional execution, a `triggers` Task is no different from a
-`tasks` Task.  Please see the [Task configuration][conf-task] for the
+`tasks` Task.  Please see the [Task Configuration][conf-task] for the
 configuration of a Task.
 
 ## `variables`

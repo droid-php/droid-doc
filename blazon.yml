@@ -1,28 +1,45 @@
 dest: output
+
+site:
+    title: "Droid PHP"
+
 pages:
     index:
         src: "doc/index.md"
+        title: "Introduction"
     getting-started:
         src: "doc/getting-started.md"
+        title: "Getting Started"
     task-arguments-and-variables:
         src: "doc/task-arguments-and-variables.md"
+        title: "Tash Arguments and Variables"
     enable-remote-command-execution:
         src: "doc/enable-remote-command-execution.md"
+        title: "Enable Remote Command Execution"
     modules:
         src: "doc/modules.md"
+        title: "Modules"
     configuration-reference/index:
         src: "doc/configuration-reference/index.md"
+        title: "Configuration Reference"
     configuration-reference/project:
         src: "doc/configuration-reference/project.md"
+        title: "Project Configuration"
     configuration-reference/target:
         src: "doc/configuration-reference/target.md"
+        title: "Target Configuration"
     configuration-reference/task:
         src: "doc/configuration-reference/task.md"
+        title: "Task Configuration"
     configuration-reference/host:
         src: "doc/configuration-reference/host.md"
+        title: "Host Configuration"
     configuration-reference/group:
         src: "doc/configuration-reference/group.md"
+        title: "Group Configuration"
     configuration-reference/firewall-rule:
         src: "doc/configuration-reference/firewall-rule.md"
+        title: "Firewall Rule Configuration"
     configuration-reference/module:
         src: "doc/configuration-reference/module.md"
+        title: "Module Configuration"

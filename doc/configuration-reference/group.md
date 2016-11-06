@@ -11,7 +11,7 @@ all members of the Group.
 
 The `hosts` property of a Group defines the members of the Group.  It is a list
 of names, each corresponding to a Host defined in the `hosts` directive of a
-Droid Project (see [Project configuration][conf-project]).  For example, a set
+Droid Project (see [Project Configuration][conf-project]).  For example, a set
 of web servers might be defined as a Group named "web_servers":-
 
     groups:
@@ -76,7 +76,7 @@ of the Group.  It is a list of rules.
 Each member of the Group may define their own rules to augment those defined
 here.
 
-Please see the [Firewall rule configuration][conf-fw] for the configuration of
+Please see the [Firewall Rule Configuration][conf-fw] for the configuration of
 firewall rules.
 
 [conf-fw]: </configuration-reference/firewall-rule.html> "Firewall rule configuration"

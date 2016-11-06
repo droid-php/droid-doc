@@ -38,7 +38,7 @@ or purpose of the project.
 ## `targets`
 
 The `targets` directive is used to declare one or more Targets and is a mapping
-of Target name to [Target configuration][conf-target]. For example, we may
+of Target name to [Target Configuration][conf-target]. For example, we may
 declare a Target named `build_everything` which executes a number of commands
 on each Host in a group named `all_machines`:-
 
@@ -111,7 +111,7 @@ to use a Module in a Project.
 ## `hosts`
 
 The `hosts` directive is used to declare one or more Hosts.  It is a mapping of
-Host name to [Host configuration][conf-host].  For example, we may declare
+Host name to [Host Configuration][conf-host].  For example, we may declare
 Hosts named `www.example.com` and provide Droid with its IP address:-
 
     hosts:
@@ -129,7 +129,7 @@ We may then refer to this Host when we wish to execute commands on it:
 ## `groups`
 
 The `groups` directive is used to declare one or more Groups of Hosts.  It is a
-mapping of Group name to [Group configuration][conf-group].  For example, we
+mapping of Group name to [Group Configuration][conf-group].  For example, we
 may declare a group of web servers named `webservers`:-
 
     groups:

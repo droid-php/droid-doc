@@ -2,13 +2,13 @@
 
 ## Table of Contents
 
-- [Project configuration][conf-project]
-- [Target configuration][conf-target]
-- [Task configuration][conf-task]
-- [Host configuration][conf-host]
-- [Group configuration][conf-group]
-- [Firewall Rule configuration][conf-fw]
-- [Module configuration][conf-module]
+- [Project Configuration][conf-project]
+- [Target Configuration][conf-target]
+- [Task Configuration][conf-task]
+- [Host Configuration][conf-host]
+- [Group Configuration][conf-group]
+- [Firewall Rule Configuration][conf-fw]
+- [Module Configuration][conf-module]
 
 ## Droid Project
 

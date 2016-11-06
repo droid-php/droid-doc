@@ -22,7 +22,7 @@ A Module is first installed into the Project and then integrated with a Target.
 ### Installation
 
 To install a Module, we first register it with the Project by adding an entry
-in the `modules` [Project configuration][conf-project].  We provide a name by
+in the `modules` [Project Configuration][conf-project].  We provide a name by
 which we will later refer to the Module and provide the source URL from where
 it is obtained:-
 
@@ -63,7 +63,7 @@ We can make use of the Module now that it is installed.
 
 The Tasks of a Module are executed as part of a Target in which the Module is
 included.  To include a Module in a Target, we add an entry to the `modules`
-[Target configuration][conf-target].  We provide the same name we earlier gave
+[Target Configuration][conf-target].  We provide the same name we earlier gave
 to the Module when it was registered with the Project:-
 
     targets:
@@ -157,7 +157,7 @@ Project.  We shall name our module "duplicity-backup":-
     $ cd myproject
     $ mkdir -p modules/duplicity-backup
 
-We create a [Module configuration][conf-module] at
+We create a [Module Configuration][conf-module] at
 `modules/duplicity-backup/droid.yml` with the following content:-
 
     description: "Set up duplicity backup"

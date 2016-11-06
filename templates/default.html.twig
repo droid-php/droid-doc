@@ -1,4 +1,16 @@
-<html>
-<head/>
-<body>{{ content|raw }}</body>
-</html>
+{% extends "@Templates/layout.html.twig" %}
+
+{% block page %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            {% block content %}
+            {{ content|raw }}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block title %}{{ page.title }}{% endblock %}

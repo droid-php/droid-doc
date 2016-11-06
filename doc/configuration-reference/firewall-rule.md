@@ -31,7 +31,7 @@ It is important to note the `fw:install` command will activate the UFW rules
 immediately.  The standard firewall policy employed by the `fw:install` command
 is to deny all incoming traffic by default.  Thus there is the risk of locking
 oneself out of a Host unless its `firewall_policy` (see [Host
-configuration][conf-host]) is to allow incoming traffic or there is a specific
+Configuration][conf-host]) is to allow incoming traffic or there is a specific
 Rule to allow incoming traffic to the SSH service.  The previous example is of
 such a rule: it allows Droid running on a specific machine to reach the SSH
 service of the Host.
@@ -57,7 +57,7 @@ incoming traffic to a web service:-
 
 The value of the `address` property may also be a specific IP address or it may
 be the label of another Host as defined in the `hosts` directive of a Droid
-Project (see [Project configuration][conf-project]):-
+Project (see [Project Configuration][conf-project]):-
 
     hosts:
         web-01:
