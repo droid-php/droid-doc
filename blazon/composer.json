@@ -1,0 +1,9 @@
+{
+    "require": {
+        "linkorb/blazon": "^1.3",
+        "droid/droid-standard": "^1.16"
+    },
+    "config": {
+	"bin-dir": "../bin"
+    }
+}

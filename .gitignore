@@ -30,6 +30,7 @@ Session.vim
 *~
 
 ### Composer ###
+/bin
 vendor/
 composer.lock
 autotune.json
