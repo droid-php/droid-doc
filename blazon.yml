@@ -45,7 +45,7 @@ pages:
         title: "Module Configuration"
     command-reference/index:
         handler: "\\Blazon\\Handler\\CommandsHandler"
-        title: "Droid Command Reference"
+        title: "Command Reference"
         child_page_name_strategy: "no_prefix"
         classes:
              - "DbTk\\SchemaLoader\\Command\\SchemaLoadCommand"
