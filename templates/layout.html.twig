@@ -2,9 +2,16 @@
 <head>
 <title>{% block title %}{% endblock %} - Droid PHP</title>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<style type="text/css">body{margin:20px auto;max-width:768px;line-height:1.6;font-size:16px;color:#333;padding:0 10px}h1,h2,h3{line-height:1.2}pre{padding-left:10px;line-height:1.2;font-size:14px}</style>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/flatly/bootstrap.min.css" rel="stylesheet" integrity="sha384-+ENW/yibaokMnme+vBLnHMphUYxHs34h9lpdbSLuAwGkOKFRl4C34WkjazBtb7eT" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/styles/monokai.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/languages/yaml.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.8.0/languages/php.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
 </head>
 <body>
-{% block page %}
-{% endblock %}
+    {% block page %}
+    {% endblock %}
+</body>
 </html>

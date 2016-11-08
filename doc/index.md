@@ -45,22 +45,6 @@ members of the Group.
 
 [Get started][get-started]!
 
-Learn more:-
-
-- [Task Arguments and Variables][task-args]
-- [Enable remote command execution][remote-exec]
-- [Configuration reference][conf-index]
-  - [Project][conf-project]
-  - [Target][conf-target]
-  - [Task][conf-task]
-  - [Host][conf-host]
-  - [Group][conf-group]
-  - [Firewall Rule][conf-fw]
-  - [Module][conf-module]
-- [Modules - reusable Task lists][modules]
-- [Command Reference][command-index]
-- ...
-
 [index]: </index.html> "Introduction"
 [get-started]: </getting-started.html> "Getting Started"
 [task-args]: </task-arguments-and-variables.html> "Task Arguments and Variables"
