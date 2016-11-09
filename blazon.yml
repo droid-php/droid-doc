@@ -19,6 +19,9 @@ pages:
     modules:
         src: "doc/modules.md"
         title: "Modules"
+    command-plugins:
+        src: "doc/command-plugins.md"
+        title: "Command Plugins"
     configuration-reference/index:
         src: "doc/configuration-reference/index.md"
         title: "Configuration Reference"
