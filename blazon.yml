@@ -16,6 +16,9 @@ pages:
     enable-remote-command-execution:
         src: "doc/enable-remote-command-execution.md"
         title: "Enable Remote Command Execution"
+    hacking:
+        src: "doc/hacking.md"
+        title: "Hacking"
     modules:
         src: "doc/modules.md"
         title: "Modules"
