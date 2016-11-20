@@ -1,30 +1,33 @@
 # Modules
 
-A Module is a self contained unit of Tasks intended to achieve a particular
-goal.  A Module is installed in a Droid Project where it is integrated with one
-or more Targets.  A Module may provide file assets such as configuration
+A Module is a self-contained group of [Tasks]() intended to achieve a particular
+goal. Optionally, a Module can provide file assets such as configuration
 templates for use by its Tasks.
 
-Droid can make use of locally developed Modules and those published in git
-repositories.  A number of [Modules are published as part of the Droid Project
+A Module must be first installed in a Droid Project, and then included in one
+or more [Targets]().
+
+Droid can use locally developed Modules and those published in git
+repositories.  A number of [Modules have already been published as part of the Droid Project
 on GitHub][github-modules].  Examples are [droid-module-timezone][] which
-reconfigures the tzdata platform package to set the time zone;
-[droid-module-apache-vhost][] which will set-up an Apache 2 virtual host; and
+reconfigures the tzdata platform package to set the time zone,
+[droid-module-apache-vhost][] which will set-up an Apache 2 virtual host, and
 [droid-module-mysql-repln][] which will configure a cluster of MySQL servers
 for Binary Log replication.
 
-We will see how to use a Module and how to create one.
+We will now see how to use an existing Module and how to create a new one.
 
-## Use a Module
+## Using a Module
 
-A Module is first installed into the Project and then integrated with a Target.
+A Module must be first installed in a Droid Project, and then included in one
+or more Targets.
 
 ### Installation
 
 To install a Module, we first register it with the Project by adding an entry
-in the `modules` [Project Configuration][conf-project].  We provide a name by
-which we will later refer to the Module and provide the source URL from where
-it is obtained:-
+in the section `modules` of the [Project Configuration file](conf-project).  We provide a name by
+which we will later refer to the Module (in this example: "timezone") and provide the source URL from where
+it is obtained:
 
 ```yaml
 name: "A Droid Project"
@@ -33,13 +36,13 @@ modules:
     "timezone": "git@github.com:droid-php/droid-module-timezone.git"
 ```
 
-Next we execute the `module:install` Command at the command line:-
+Next we execute the `module:install` Command at the command line:
 
 ```shell
 $ vendor/bin/droid module:install
 ```
 
-which should result in the following output as the Module is installed:-
+This should result in the following output as the Module is installed:
 
 ```shell
 Installing droid modules:
@@ -55,22 +58,22 @@ Checking connectivity... done.
 Done
 ```
 
-The Module is installed into its own folder, within the Project's
+The Module is installed in its own folder, within the Project's
 `droid-vendor` folder.  When Droid encounters a reference to the Module, it
-will look for it in a folder of the same name in two locations:-
+will look for it in a folder of the same name in two locations:
 
 - `droid-vendor`: where Droid installs Modules obtained from git repositories.
 - `modules`: where locally developed Modules should be placed. See the section
   entitled "Create a Module", for more information.
 
-We can make use of the Module now that it is installed.
+Now that the Module is installed, we can include it in one or more Targets.
 
-### Integration with a Target
+### Including a Module in a Target
 
 The Tasks of a Module are executed as part of a Target in which the Module is
-included.  To include a Module in a Target, we add an entry to the `modules`
-[Target Configuration][conf-target].  We provide the same name we earlier gave
-to the Module when it was registered with the Project:-
+included.  To include a Module in a Target, we add an entry to the section `modules` of the
+[Target Configuration file][conf-target].  We provide the same name we earlier gave
+to the Module when it was registered with the Project:
 
 ```yaml
 targets:
@@ -79,10 +82,10 @@ targets:
             - "timezone"
 ```
 
-To complete the integration we provide any data expected by the Module's Tasks.
-In this example, we want to provide time zone information.  The [timezone
-Module documentation][droid-module-timezone-doc] reveals that we should provide
-values for two Variables:-
+To complete the inclusion, we must provide any data required by the Module.
+In this example, we want to provide time zone information.  According to the [timezone
+Module documentation][droid-module-timezone-doc], we should provide
+values for two Variables:
 
 ```text
 timezone:
