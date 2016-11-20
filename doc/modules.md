@@ -92,14 +92,14 @@ timezone:
     area: <string>  # for example, "Europe"
     zone: <string>  # for example, "Amsterdam"
 ```
+We can provide the Module variables in one of the following locations:
+- as Project Variables that are accessible to all Tasks in the Project;
+- as Target variables that are accessible to a Module in more than one Target and with different values.
+- as Host or Group Variables if we wished to run the Module on a number of Hosts, each with differing values.
+For more information on declaring variables, refer to [xxxx]().
 
-We might provide these values as Project Variables where they are accessible to
-all Tasks in the Project.  We would provide the values as Target variables if
-we wished to use a Module in more than one Target and with different values.
-We would provide the values as Host or Group Variables if we wished to run the
-Module on a number of Hosts, each with differing values.  In this example, we
-will provide them as Target Variables; so the Project configuration now looks
-like the following:-
+In this example, we will provide Module variables as Target Variables.
+The Project configuration is now as follows:
 
 ```yaml
 name: "A Droid Project"
@@ -116,15 +116,17 @@ targets:
             - "timezone"
 ```
 
-The Module is now integrated with the Target named `make_website`: when the
-Target is run, the Tasks of the Module will be executed.
+The Module is now included in the Target `make_website`; when the Target is run, the Tasks of the Module will be executed.
 
-Multiple Modules may be integrated with a Target in this way and their order of
+Multiple Modules may be included in a Target in this way. Their order of
 execution is the order in which they appear in the list of Target `modules`.
 
-The Tasks of Modules will execute before those of the Target itself. So, the
-Target Task in the following example would display "Europe/Berlin" instead of
-whatever was the zone before the Module changed it:-
+The priority of execution is as follows:
+1. the Tasks of Modules;
+2. the Tasks of the Target.
+
+So, the Target Task in the following example would display "Europe/Berlin" instead of
+the system value prior to changes made by the Module:
 
 ```yaml
 targets:
@@ -145,7 +147,7 @@ therefore confusing: it is clearer when we declare them the other way round.
 We have seen how to use a Module in a Project.  Let us now look at how to
 create one.
 
-## Create a Module
+## Creating a Module
 
 To demonstrate the creation of a Module, let us go through the process from the
 beginning.  We shall see how to create a Module that will set-up scheduled
