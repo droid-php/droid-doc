@@ -150,36 +150,36 @@ create one.
 ## Creating a Module
 
 To demonstrate the creation of a Module, let us go through the process from the
-beginning.  We shall see how to create a Module that will set-up scheduled
+beginning.  We shall see how to create a Module that will set up scheduled
 backups using the duplicity backup software.  The requirements of the Module
-are that it should:-
+are that it should:
 
-- provide for three cron jobs: full backup, incremental backup and removal of
+- provide for three cron jobs: full backup, incremental backup, and removal of
   old backups
-- allow the backup schedule to be configurable
+- allow configuration of the backup schedule
 - allow configuration of a list of files to be excluded from the backup
 - allow configuration of the destination folder for the backup files
 - allow configuration of the number of backup sets to keep
 - allow configuration of the backup name
 
-To keep this example from getting too in-depth, we will:-
+To keep this example simple, we will:
 
-- backup as the root user: our Module won't need to create user accounts or
-  deal with file access privileges
-- backup the root of the file system
-- set the backup destination as somewhere on the same file system instead of
-  dealing with the various destination options duplicity provides
+- back up as the root user (our Module won't need to create user accounts or
+  deal with file access privileges)
+- back up the root of the file system
+- set the backup destination as somewhere on the same file system (instead of
+  dealing with the various destination options that duplicity provides)
 
 Let's begin. First we will create a folder for the Module in an existing Droid
-Project.  We shall name our module "duplicity-backup":-
+Project.  We shall name our module "duplicity-backup":
 
 ```shell
 $ cd myproject
 $ mkdir -p modules/duplicity-backup
 ```
 
-We create a [Module Configuration][conf-module] at
-`modules/duplicity-backup/droid.yml` with the following content:-
+We create a [Module Configuration file][conf-module] called
+`modules/duplicity-backup/droid.yml` with the following content:
 
 ```yaml
 description: "Set up duplicity backup"
@@ -191,12 +191,12 @@ tasks: []
 We've given a description of the module and defined a Variable named
 `mod_duplicity_backup`.  The Variable will be used to provide data to the Tasks
 and can be overridden in the Projects which use the Module.  The name of the
-Variable is a convention which helps make it clear that the data pertains to
+Variable is a convention, indicating that the data pertains to
 this Module.
 
 Our first Task will install the `duplicity` package.  For this we will use the
 `apt-get:install` Droid Command.  Its help text shows us its arguments and
-options:-
+options:
 
 ```shell
 $ vendor/bin/droid help apt-get:install
@@ -219,7 +219,7 @@ Help:
   Installs package(s) through apt-get on Debian based systems
 ```
 
-So we add our first Module Task:-
+So we add our first Module Task:
 
 ```yaml
 description: "Set up duplicity backup"
@@ -234,13 +234,13 @@ tasks:
 ```
 
 We use the `sudo` property of the Task so that the command is executed with the
-privileges it demands.
+required privileges.
 
-Next, we want to be able to provide a file to duplicity which will contain a
-list of files to exclude from the backup.  We will create a file template that
-our next Task will populate and copy to somewhere duplicity can read it.  We
-need a Variable to provide a list of excluded files and we can provide a
-sensible default list:-
+Next, we want to be able to provide a file containing a list of files to exclude
+from the backup.  We will create a file template; our next Task will populate
+this file and copy it to somewhere duplicity can read it.  We
+need a Variable to provide a list of excluded files. We can also provide a
+sensible default list:
 
 ```yaml
 variables:
@@ -254,15 +254,15 @@ variables:
             - "/tmp/*"
 ```
 
-Now we need a file template into which we'll write the list of excluded files.
-We create a folder within the Module to hold such "assets" as this:-
+Now we need a file template where we'll write the list of excluded files.
+We create a folder within the Module to hold such "assets":
 
 ```shell
 $ mkdir modules/duplicity-backup/assets
 ```
 
-and we create a template file `assets/excluded-files.list.template` with the
-following content:-
+We create a template file `assets/excluded-files.list.template` with the
+following content:
 
 ```twig
 {% for file in mod_duplicity_backup.excluded_files %}
@@ -274,9 +274,9 @@ The content of the template is [Twig syntax][twig-syntax].  It will cause each
 entry of the `mod_duplicity_backup.excluded_files` Variable to be printed on
 its own line.
 
-We must make sure we don't backup the backup!.  Let's add another Variable to
+We must make sure we don't back up the backup!  Let's add another Variable to
 hold the path to the backup destination (again, providing a sensible default)
-and then make sure this is also written into our excluded files list:
+and then make sure this is also part of our excluded files list:
 
 ```yaml
 variables:
@@ -285,7 +285,7 @@ variables:
         destination: "/var/backup"
 ```
 
-Our template now looks like this:-
+Our template now looks like this:
 
 ```twig
 {% for file in mod_duplicity_backup.excluded_files %}
@@ -296,7 +296,7 @@ Our template now looks like this:-
 
 We will use the `fs:copy` Droid Command to copy the content of the file to the
 Host.  Droid will use the Twig template engine to transform the template into
-the desired content.  Here is the next Module Task:-
+the desired content.  Here is the next Module Task:
 
 ```yaml
 tasks:
@@ -309,11 +309,11 @@ tasks:
           dest: "/root/excluded-files.list"
 ```
 
-Note that we have used a the name of a magic Variable in the `src` Task
+Note that we have used the name of a magic Variable in the `src` Task
 Argument: `mod_path` is the path to the Module's folder and allows a Module to
 locate itself and its assets.
 
-Next, we schedule the duplicity backups.  We need a few more Variables:-
+Next, we schedule the duplicity backups.  We need a few more Variables:
 
 ```yaml
 variables:
@@ -327,10 +327,10 @@ variables:
             incremental: "30 5 * * 2-7"
 ```
 
-We provided some sensible default values for the name of the backup; for the
-maximum number of backup sets to keep when older backups are removed; and for
-the schedules for each of the backup jobs, in the usual cron format.  We will
-use the `cron:addjob` Droid Command to add the three jobs to the crontab:-
+We provided some sensible default values for the name of the backup: for the
+maximum number of backup sets to keep when older backups are removed and for
+the schedules for each of the backup jobs in the usual cron format.  We will
+use the `cron:addjob` Droid Command to add the three jobs to the crontab:
 
 ```yaml
 tasks:
@@ -379,8 +379,8 @@ The `job-command` Task Argument takes advantage of Yaml's "folded style" which
 will result in one (long) line with the new lines and extra white space
 removed.
 
-Our Module is now functionally complete and can be integrated into a Target in
-our Droid Project.  Let's create the Project configuration file:-
+Our Module is now functionally complete and can be included in a Target within
+our Droid Project.  Let's create the Project configuration file:
 
 ```yaml
 name: "Testing the duplicity-backup Module"
@@ -406,17 +406,17 @@ variables:
             - "/usr/local/droid/*"
 ```
 
-In the Project configuration we have registered the Module with the Droid
+In the Project configuration, we have registered the Module with the Droid
 Project by providing an entry in the Project `modules`.  Since this is a
-locally developed Module there is a need neither to provide a source URL for
-it, nor to install the Module with the `module:install` Command.  We do need to
+locally developed Module, we don't need to provide a source URL for
+it nor to install the Module with the `module:install` Command.  We do need to
 make sure that the name we gave matches the Module's folder name, so that Droid
 can locate it.  We have included the Module in a Target named `setup_backup`
-which execute Commands on the Host named `my-test-machine`.  Finally, we
+which executes Commands on the Host named `my-test-machine`.  Finally, we
 override one of the Variables `mod_duplicity_backup.excluded_files` so that we
-may exclude some additional files.
+can exclude some additional files.
 
-Our Project folder should now look like this:-
+Our Project folder should now look like this:
 
 ```text
 myproject
@@ -427,14 +427,14 @@ myproject
       |_ assets
          |_ excluded-files.list.template
 ```
-We are ready to run the `setup_backup` Target:-
+We are ready to run the `setup_backup` Target:
 
 ```shell
 $ vendor/bin/droid setup_backup
 ```
 
 We should see something like the following output (this example has been
-shortened for clarity):-
+shortened for clarity):
 
 ```shell
 Droid: Running target `setup_backup`
@@ -467,10 +467,10 @@ Result: 0
 --------------------------------------------
 ```
 Success!  Duplicity is installed and three jobs were placed into `/etc/cron.d`:
-one for the cleanup; one for the full backup; and one for the incremental.
+one for the cleanup, one for the full backup, and one for the incremental.
 
-This Module may now be reused in this or in other Projects and is easily
-configured with different schedules, excluded files and so on.
+This Module may now be used in this Project or reused in other Projects. It can be easily
+configured with different schedules, excluded files, and so on.
 
 [conf-module]: </configuration-reference/module.html> "Module Configuration"
 [conf-project]: </configuration-reference/project.html> "Project Configuration"
