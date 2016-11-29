@@ -283,7 +283,7 @@ target:
             - name: "Install SSL certificate"
               ...
               with_items: "websites"
-              with_items_filter: "item['ssl_cert']"
+              with_items_filter: "'ssl_cert' in item"
 ```
 
 In the `make_website` Target in the above example, the "Install SSL
